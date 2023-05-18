@@ -35,9 +35,8 @@ jobs:
       - name: Test & Build
         run: |
           ./v/v test tt/
-          ./v/v main.v
-          ./main
-          mv main
+          ./v/v -o tt main.v
+          ./tt
           ls -lha
 
       - name: Release
