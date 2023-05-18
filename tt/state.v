@@ -1,6 +1,7 @@
 module tt
 
 import os
+import time
 
 const path = '${os.home_dir()}/.config/tt/records.jsonl'
 
@@ -11,6 +12,7 @@ struct Record {
 
 struct State {
 mut:
+	now       time.Time
 	records   []Record
 	tags      []string
 	dirty     bool

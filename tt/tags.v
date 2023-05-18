@@ -2,11 +2,11 @@ module tt
 
 pub fn new_tag(tag string) !string {
 	if tag.len == 0 {
-		return error("tag may not be empty")
-	} else if tag.contains(" ") {
-		return error("tag may not contain whitespace")
-	} else if tag.count(":") > 1 {
-		return error("tag may not contain multiple : chars")
+		return error('tag may not be empty')
+	} else if tag.contains(' ') {
+		return error('tag may not contain whitespace')
+	} else if tag.count(':') > 1 {
+		return error('tag may not contain multiple : chars')
 	} else {
 		return tag
 	}
