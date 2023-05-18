@@ -1,7 +1,7 @@
 Module {
 	name: 'tt'
 	description: ''
-	version: '0.0.1'
+	version: '0.5'
 	license: 'MIT'
 	dependencies: []
 }
