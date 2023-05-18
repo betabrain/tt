@@ -34,15 +34,15 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Test & Build
         run: |
-          pwd
+          mkdir bin
           ./v/v test tt/
-          ./v/v -o tt main.v
-          ./tt
+          ./v/v -o bin/tt main.v
+          ./bin/tt
           ls -lha
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            tt
+            bin/tt
             LICENSE
