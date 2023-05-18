@@ -39,9 +39,11 @@ jobs:
           ./v/v -o bin/tt main.v
           ./bin/tt
           ls -lha
+          ls -lha ./bin
 
       - name: Release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             bin/tt
