@@ -4,6 +4,7 @@ import tt
 import os
 import cli
 import time
+import math
 
 fn main() {
 	mut app := cli.Command{
@@ -11,7 +12,14 @@ fn main() {
 		description: 'time tracker'
 		version: '0.0.1'
 		execute: fn (cmd cli.Command) ! {
-			now := time.parse_rfc3339(cmd.flags.get_string('time')!)!.local_to_utc()
+			mut now_string := cmd.flags.get_string('time')!
+			if !now_string.contains("Z") {
+				offset := int(math.ceil(time.Duration(time.now() - time.utc()).hours()))
+				now_string += "+${offset:02}:00"
+			}
+			mut now := time.parse_iso8601(now_string)!.local_to_utc()
+			println("str: ${cmd.flags.get_string('time')!}")
+			println("as of: ${now.format_rfc3339()}")
 			mut state := tt.load_state(now)!
 
 			for flag in cmd.flags {
