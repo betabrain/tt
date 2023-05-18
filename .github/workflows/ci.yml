@@ -38,3 +38,18 @@ jobs:
         run: |
           ./v/v test tt/
           ./v/v main.v
+          ./main
+          mv main tt-${{ github.ref_name }}
+
+      - name: Build
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          mv main tt-${{ github.ref_name }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            tt
+            LICENSE
