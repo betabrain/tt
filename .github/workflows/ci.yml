@@ -50,5 +50,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            tt
+            tt-${{ github.ref_name }}
             LICENSE
