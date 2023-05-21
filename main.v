@@ -5,6 +5,7 @@ import os
 import cli
 import time
 import math
+import rand
 
 fn main() {
 	mut app := cli.Command{
@@ -49,12 +50,12 @@ fn main() {
 			state.persist_if_dirty()!
 
 			// reporting
-			grouping := match cmd.flags.get_string("group")!.to_lower() {
-				"day" { tt.Grouping.day }
-				"week" { tt.Grouping.week }
-				"month" { tt.Grouping.month }
-				"quarter" { tt.Grouping.quarter }
-				"year" { tt.Grouping.year }
+			grouping := match cmd.flags.get_string('group')!.to_lower() {
+				'day' { tt.Grouping.day }
+				'week' { tt.Grouping.week }
+				'month' { tt.Grouping.month }
+				'quarter' { tt.Grouping.quarter }
+				'year' { tt.Grouping.year }
 				else { tt.Grouping.week }
 			}
 			state.report(grouping)
@@ -102,6 +103,34 @@ fn main() {
 		execute: fn (cmd cli.Command) ! {
 			state := tt.load_state(time.utc())!
 			dump(state)
+		}
+	})
+
+	app.add_command(cli.Command{
+		name: 'dummy-data'
+		description: 'generate dummy data for testing'
+		execute: fn (cmd cli.Command) ! {
+			mut now := time.utc().add(-500 * 24 * time.hour)
+			mut state := tt.load_state(now)!
+			tags := ['work:a', 'work:b', 'work:c', 'home:a', 'home:b', 'chores', 'paperwork',
+				'testing']
+
+			for i in 0 .. 500 * 12 {
+				if i % 500 == 0 {
+					println('generating... ${i}/${500 * 12}')
+				}
+				for tag in rand.choose(tags, 3)! {
+					state.add(tag)
+				}
+				for tag in rand.choose(tags, 4)! {
+					state.remove(tag)
+				}
+				state.persist_if_dirty()!
+				now = now.add(111 * time.minute)
+				state = tt.load_state(now)!
+			}
+
+			state.report(tt.Grouping.month)
 		}
 	})
 

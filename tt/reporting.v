@@ -150,7 +150,6 @@ pub fn (state State) report(grouping Grouping) {
 			durations[tag] += timeframe.duration
 		}
 
-
 		inner_start := group_inner_time(grouping, start.local())
 		inner_end := group_inner_time(grouping, end.local())
 		println('${blue(timeframe.id)}  ${green(inner_start)}–${red(inner_end)}  ${timeframe.duration.str():12}  ${tags}')
