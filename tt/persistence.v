@@ -16,6 +16,7 @@ pub fn (mut state State) persist_if_dirty() ! {
 			tags: state.tags
 		}
 		fd.writeln(json.encode(r))!
+		store_record(r)!
 		state.records << r
 		state.records.sort(a.id < b.id)
 		state.dirty = false
