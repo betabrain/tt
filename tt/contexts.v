@@ -11,8 +11,8 @@ pub fn (app App) add_tag(tag string) ! {
 	return error('not yet implemented')
 }
 
-pub fn (app App) remove_tag(tag string) ! {
+pub fn (app App) remove_tag(t string) ! {
 	sql app.db {
-		delete from Context where name == '' && tag == tag
+		delete from Context where name == '' && tag == t
 	}!
 }
