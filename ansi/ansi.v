@@ -1,4 +1,4 @@
-module tt
+module ansi
 
 fn blue(s string) string {
 	return '\033[0;34m${s}\033[0m'
