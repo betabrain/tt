@@ -21,3 +21,8 @@ fn test_random_string() {
 	assert h1.len == 8
 	assert h1 == h2
 }
+
+fn test_random_value() {
+	r := random()!
+	assert r.len == 8
+}
