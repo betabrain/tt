@@ -15,19 +15,28 @@ pub fn (app App) current_context() []string {
 	return result.map('${it.key}:${it.value}')
 }
 
-pub fn (app App) add_tag(tag string) ! {
+pub fn (mut app App) add_tag(tag string) ! {
+	stopped := app.current_frame() == none
+	if !stopped {
+		app.stop_frame()!
+	}
 	ctx := Context{
 		key: tags.extract_key(tag)
 		value: tags.extract_value(tag) or { '' }
 	}
+	tag_key := ctx.key
 	sql app.db {
-		delete from Context where key == ctx.key
+		delete from Context where key == tag_key
 		insert ctx into Context
 	}!
+	if !stopped {
+		app.start_frame()!
+	}
 }
 
 pub fn (app App) remove_tag(tag string) ! {
+	tag_key := tags.extract_key(tag)
 	sql app.db {
-		delete from Context where key == tags.extract_key(tag)
+		delete from Context where key == tag_key
 	}!
 }
