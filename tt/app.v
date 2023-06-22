@@ -15,7 +15,7 @@ pub fn load_app() !App {
 	app.db = sqlite.connect(tt.db_path)!
 	sql app.db {
 		create table Context
-		create table Frame
+		create table Timeframe
 	}!
 	return app
 }
@@ -25,4 +25,9 @@ pub fn (mut app App) close() {
 		println('error: ${err}')
 		exit(-1)
 	}
+}
+
+pub fn (mut app App) reset() ! {
+	os.rm(tt.db_path)!
+	app = load_app()!
 }

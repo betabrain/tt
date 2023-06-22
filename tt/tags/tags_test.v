@@ -1,4 +1,4 @@
-module tt
+module tags
 
 fn test_key_extraction_no_value() {
 	k := extract_key('k')

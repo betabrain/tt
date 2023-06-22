@@ -1,4 +1,4 @@
-module tt
+module tags
 
 pub fn new_tag(tag string) !string {
 	if tag.len == 0 {
